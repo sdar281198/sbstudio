@@ -1,0 +1,74 @@
+[
+{
+"title": "Bakehouse SMF",
+"thumb": "./assets/images/bake.png",
+"images": [
+"https://cakes-ordering-phi.vercel.app/"
+],
+"desc": "Sistema web personalizado desenvolvido para uma pastelaria, incluindo armazenamento de produtos, pagamentos online, design responsivo e muito mais.",
+"tech": ["HTML","CSS","JS","NodeJs","MERN","MongoDB","Redux","React","Tailwind"]
+},
+{
+"title": "Dropcomm",
+"thumb": "./assets/images/drop.png",
+"images": [
+"https://dropcomm.vercel.app/"
+],
+"desc": "Website personalizado desenvolvido para um negócio de dropshipping e comércio eletrónico, que inclui armazenamento de produtos, pagamentos online, design responsivo e muito mais.",
+"tech": ["JS","NodeJs","MERN","MongoDB","Redux","React","Tailwind"]
+},
+{
+"title": "Tool Peru",
+"thumb": "./assets/images/tool.png",
+"images": [
+"https://sdardev.com/tool/"
+],
+"desc": "Site comercial que oferecia serviços domésticos e industriais de diferentes tipos.",
+"tech": ["HTML","CSS","JS","PHP","MySQL"]
+},
+{
+"title": "Thor(The online race)",
+"thumb": "./assets/images/thor.png",
+"images": [
+"https://sdardev.com/thorphp/"
+],
+"desc": "Jogo escolar online em que os participantes tinham de adivinhar adivinhas, acumular pontos, e a escola com a pontuação mais alta ganhava uma viagem no final do ano.",
+"tech": ["HTML","CSS","JS","PHP","MySQL","Laravel","Tailwind","SASS"]
+},
+{
+"title": "Regna",
+"thumb": "./assets/images/regna.png",
+"images": [
+"https://sdardev.com/Regna/"
+],
+"desc": "Página inicial com design estético para uma empresa de fotografia e publicidade, entre outras coisas.",
+"tech": ["HTML","CSS","JS","PHP","MySQL"]
+},
+{
+"title": "Native Able",
+"thumb": "./assets/images/native.png",
+"images": [
+"https://landingsbnative.vercel.app/"
+],
+"desc": "Página inicial com design estético para uma empresa de fotografia e publicidade, entre outras coisas.",
+"tech": ["React","CSS","JS","Next"]
+},
+{
+"title": "Portfolio for a customer",
+"thumb": "./assets/images/portfolio.png",
+"images": [
+"https://sdardev.com/sdarportfolio/"
+],
+"desc": "Página inicial com design estético para um cliente.",
+"tech": ["React","CSS","JS","Next"]
+},
+{
+"title": "Prato entertainment",
+"thumb": "./assets/images/pratogrand.png",
+"images": [
+"https://prato-entertainment.vercel.app/"
+],
+"desc": "Página inicial com design estético para uma empresa de catering.",
+"tech": ["React","CSS","JS","Next"]
+}
+]

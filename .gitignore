@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+
+# Archivos de entorno / secretos
+.env
+backend/config-local.php
+backend/config-prod.php
+
+# Logs / temporales
+*.log
+.DS_Store
+Thumbs.db
+
+# Archivos generados (si usas build en algún momento)
+dist/
+build/
+.cache/
+
+# Opcional: mapas y zips si no quieres versionarlos
+*.map
+*.zip
