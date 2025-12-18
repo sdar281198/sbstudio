@@ -78,13 +78,13 @@ if ($mode === '' && $method === 'POST') {
   $message = trim($_POST['message'] ?? '');
 
   if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $message === '') {
-    json_response(['error' => 'Datos inválidos'], 422);
+    json_response(['error' => 'Invalid data'], 422);
   }
 
   $st = $pdo->prepare('INSERT INTO messages (name,email,subject,message) VALUES (?,?,?,?)');
   $st->execute([$name, $email, $subject, $message]);
 
-  json_response(['ok' => true, 'message' => 'Mensaje enviado correctamente']);
+  json_response(['ok' => true, 'message' => 'Message sent successfully']);
 }
 
-json_response(['error' => 'Método no permitido'], 405);
+json_response(['error' => 'Disallowed method'], 405);

@@ -9,53 +9,156 @@ export class ContactForm extends LitElement {
     :host { display: block; }
   `;
 
-  // estado
-    status = '';
-    _statusType = 'ok';
+    toast(message, type = 'ok') {
+    const bg =
+      type === 'ok'
+        ? 'rgba(34,197,94,.90)'   // verde
+        : type === 'warn'
+        ? 'rgba(31,41,55,.90)'   // amarillo
+        : 'rgba(239,68,68,.92)';   // rojo
+
+    // Toastify viene del script global (window.Toastify)
+    if (!window.Toastify) {
+      console.warn('Toastify no está cargado');
+      alert(message);
+      return;
+    }
+
+    window.Toastify({
+      text: message,
+      duration: 3200,
+      gravity: 'top',
+      position: 'center',
+      close: true,
+      stopOnFocus: true,
+      style: {
+        background: bg,
+        borderRadius: '14px',
+        padding: '12px 14px',
+        boxShadow: '0 10px 30px rgba(0,0,0,.15)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        fontWeight: '600',
+      },
+    }).showToast();
+  }
+
     
+    // submit = async (e) => {
+    //   e.preventDefault();
+
+    //   const form = e.currentTarget;
+    //   const formData = new FormData(form);
+
+    //   // ✅ funciona en local (BASE_URL="") y en cPanel (BASE_URL="/sbstudio")
+    //   const base = window.BASE_URL ?? '';
+    //   const url = `${base}/backend/post-test.php`;
+
+    //   try {
+    //     const res = await fetch(url, {
+    //       method: 'POST',
+    //       body: formData,
+    //       credentials: 'same-origin',
+    //       headers: { 'Accept': 'application/json' },
+    //     });
+
+    //     const text = await res.text();
+
+    //     let data;
+    //     try {
+    //       data = JSON.parse(text);
+    //     } catch {
+    //       console.error('Respuesta no JSON:', text);
+    //       throw new Error('Respuesta inválida del servidor');
+    //     }
+
+    //     if (!res.ok) {
+    //       throw new Error(data.error || `Error HTTP ${res.status}`);
+    //     }
+
+    //     this.status = data.message || 'Gracias por tu mensaje 👋';
+    //     this._statusType = 'ok';
+    //     form.reset();
+    //   } catch (err) {
+    //     console.error(err);
+    //     this.status = err.message || 'Hubo un error al enviar el mensaje 😟';
+    //     this._statusType = 'error';
+    //   }
+
+    //   this.requestUpdate();
+    // };
     submit = async (e) => {
-      e.preventDefault();
+  e.preventDefault();
 
-      const form = e.currentTarget;
-      const formData = new FormData(form);
+  const form = e.currentTarget;
 
-      // ✅ funciona en local (BASE_URL="") y en cPanel (BASE_URL="/sbstudio")
-      const base = window.BASE_URL ?? '';
-      const url = `${base}/backend/post-test.php`;
+  // 1) Crear FormData primero
+  const formData = new FormData(form);
 
-      try {
-        const res = await fetch(url, {
-          method: 'POST',
-          body: formData,
-          credentials: 'same-origin',
-          headers: { 'Accept': 'application/json' },
-        });
+  // 2) Validación manual (antes del fetch)
+  const name = formData.get('name')?.toString().trim();
+  const email = formData.get('email')?.toString().trim();
+  const message = formData.get('message')?.toString().trim();
 
-        const text = await res.text();
+  if (!name) {
+    this.toast('Write your name', 'warn');
+    return;
+  }
 
-        let data;
-        try {
-          data = JSON.parse(text);
-        } catch {
-          console.error('Respuesta no JSON:', text);
-          throw new Error('Respuesta inválida del servidor');
-        }
+  if (!email) {
+    this.toast('Complete your email', 'warn');
+    return;
+  }
 
-        if (!res.ok) {
-          throw new Error(data.error || `Error HTTP ${res.status}`);
-        }
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!emailOk) {
+    this.toast('Incorrect email', 'error');
+    return;
+  }
 
-        this.status = data.message || 'Gracias por tu mensaje 👋';
-        this._statusType = 'ok';
-        form.reset();
-      } catch (err) {
-        console.error(err);
-        this.status = err.message || 'Hubo un error al enviar el mensaje 😟';
-        this._statusType = 'error';
-      }
+  if (!message) {
+    this.toast('Let us your message', 'warn');
+    return;
+  }
 
-      this.requestUpdate();
-    };
+  // 3) Fetch al backend
+  const base =
+  (typeof window.BASE_URL === 'string' && window.BASE_URL.length)
+    ? window.BASE_URL
+    : (location.pathname.startsWith('/sbstudio') ? '/sbstudio' : '');
+  const url = `${base}/backend/post-test.php`;
+
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json' },
+    });
+
+    const text = await res.text();
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      console.error('Respuesta no JSON:', text);
+      this.toast('Respuesta inválida del servidor', 'error');
+      return;
+    }
+
+    if (!res.ok) {
+      this.toast(data.error || `Error HTTP ${res.status}`, 'error');
+      return;
+    }
+
+    this.toast(data.message || 'Gracias por tu mensaje 👋', 'ok');
+    form.reset();
+  } catch (err) {
+    console.error(err);
+    this.toast(err.message || 'Hubo un error al enviar el mensaje 😟', 'error');
+  }
+};
 
 
 
@@ -85,12 +188,12 @@ export class ContactForm extends LitElement {
 
           <!-- Formulario -->
           <form
+            novalidate
             @submit=${this.submit}
-            class="card-glass p-6 grid gap-4 rounded-2xl"
+            class="card-glass p-6 grid gap-4 rounded-2xl text-gray-800"
           >
             <input
               name="name"
-              required
               placeholder="Nombre"
               class="px-4 py-3 rounded-xl bg-white/5 border border-gray-700"
             />
@@ -98,7 +201,6 @@ export class ContactForm extends LitElement {
             <input
               type="email"
               name="email"
-              required
               placeholder="Email"
               class="px-4 py-3 rounded-xl bg-white/5 border border-gray-700"
             />
@@ -111,7 +213,6 @@ export class ContactForm extends LitElement {
 
             <textarea
               name="message"
-              required
               rows="5"
               placeholder="Mensaje"
               class="px-4 py-3 rounded-xl bg-white/5 border border-gray-700"
@@ -122,13 +223,6 @@ export class ContactForm extends LitElement {
             >
               Enviar
             </button>
-
-            ${this.status
-              ? html`
-                  <p class="text-sm mt-2 ${this._statusType === 'ok' ? 'text-emerald-400' : 'text-red-400'}">
-                    ${this.status}
-                  </p>`
-              : ''}
 
           </form>
         </div>

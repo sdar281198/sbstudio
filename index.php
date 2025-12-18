@@ -1,8 +1,8 @@
 <?php
 // Detectar entorno (local vs producción)
 $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
+$BASE_URL = $isLocal ? '/sbstudio' : '/sbstudio';
 
-$BASE_URL = $isLocal ? '' : '/sbstudio';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -11,6 +11,7 @@ $BASE_URL = $isLocal ? '' : '/sbstudio';
     <script>
       window.BASE_URL = "<?= $BASE_URL ?>";
     </script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SB Studio</title>
@@ -26,7 +27,7 @@ $BASE_URL = $isLocal ? '' : '/sbstudio';
     />
     <link rel="stylesheet" href="https://sdardev.com/sbstudio/css/styles.css" />
     <link rel="icon" type="image/png" href="./assets/images/favicon.png" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <!-- 3D y Lit -->
     <script type="importmap">
       {
@@ -142,11 +143,6 @@ $BASE_URL = $isLocal ? '' : '/sbstudio';
             >
               <i class="fa-brands fa-linkedin"></i>
             </a>
-
-            <!-- <a href="https://wa.me/351939441781" target="_blank"
-          class="text-white/70 hover:text-white text-xl">
-          <i class="fa-brands fa-whatsapp"></i>
-        </a> -->
           </li>
         </ul>
       </nav>
@@ -164,5 +160,6 @@ $BASE_URL = $isLocal ? '' : '/sbstudio';
     </footer>
 
     <script type="module" src="./js/main.js?v=1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </body>
 </html>

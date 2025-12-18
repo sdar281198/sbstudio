@@ -35,34 +35,50 @@ require_admin();
 
 <script>
 let deleteId = null;
+const base =
+  (typeof window.BASE_URL === 'string' && window.BASE_URL.length)
+    ? window.BASE_URL
+    : (location.pathname.startsWith('/sbstudio') ? '/sbstudio' : '');
+
 
 async function loadMessages() {
-  const res = await fetch("/sbstudio/backend/post-test.php?mode=messages", {
-    method: "GET",
-    headers: { "Accept": "application/json" },
-    credentials: "same-origin"
+  const base =
+    (typeof window.BASE_URL === 'string' && window.BASE_URL.length)
+      ? window.BASE_URL
+      : (location.pathname.startsWith('/sbstudio') ? '/sbstudio' : '');
+
+  const res = await fetch(`${base}/backend/post-test.php?mode=messages`, {
+    method: 'GET',
+    credentials: 'same-origin',
+    headers: { Accept: 'application/json' },
   });
 
-  console.log("STATUS:", res.status);
-
   const text = await res.text();
-  console.log("RAW:", text);
+  console.log('STATUS:', res.status);
+  console.log('RAW:', text);
 
   let data;
   try {
     data = JSON.parse(text);
   } catch {
-    console.error("No JSON:", text);
+    console.error('No JSON:', text);
     return;
   }
 
   if (!res.ok) {
-    console.error("API error:", data);
+    console.error('API error:', data);
     return;
   }
 
   const container = document.getElementById("messages");
   container.innerHTML = "";
+
+  if (!Array.isArray(data) || data.length === 0) {
+    container.innerHTML = `<div class="p-4 bg-gray-800 rounded-xl border border-gray-700 text-white/70">
+      No hay mensajes todavía.
+    </div>`;
+    return;
+  }
 
   data.forEach(m => {
     const div = document.createElement("div");
@@ -84,6 +100,7 @@ async function loadMessages() {
   });
 }
 
+
 loadMessages();
 
 function openModal(id) {
@@ -99,7 +116,7 @@ function closeModal() {
 document.getElementById("confirmDelete").onclick = async () => {
   if (!deleteId) return;
 
-  await fetch(`/sbstudio/backend/post-test.php?mode=messages&id=${deleteId}`, {
+  await fetch(`${base}/backend/post-test.php?mode=messages&id=${deleteId}`, {
     method: "DELETE",
     headers: { "Accept": "application/json" },
     credentials: "same-origin"
@@ -110,13 +127,12 @@ document.getElementById("confirmDelete").onclick = async () => {
 };
 
 document.getElementById("logoutBtn").onclick = async () => {
-  await fetch("/sbstudio/backend/post-test.php?mode=logout", {
+  await fetch(`${base}/backend/post-test.php?mode=logout`, {
     method: "DELETE",
     headers: { "Accept": "application/json" },
     credentials: "same-origin"
   });
-
-  location.href = "/sbstudio/admin/login.php";
+    location.href = `${base}/admin/login.php`;
 };
 
 </script>
