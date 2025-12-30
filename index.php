@@ -1,3 +1,5 @@
+<!-- DEPLOY CHECK: 2025-12-30 21:30 -->
+
 <?php
 // Detectar entorno (local vs producción)
 $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
