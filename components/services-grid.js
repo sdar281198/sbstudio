@@ -8,10 +8,10 @@ class ServicesGrid extends LitElement {
   `;
 
   services = [
-    { title: 'Site personalizado', desc: 'Sites e sistemas', icon: './assets/icons/web2.png' },
-    { title: 'UI/UX',        desc: 'Design de interface', icon: './assets/icons/ux.png' },
-    { title: 'Branding',     desc: 'Logotipos e identidad',    icon: './assets/icons/brand.png' },
-    { title: 'Ecommerce',    desc: 'Lojas online',       icon: './assets/icons/ecomm.png' }
+    { title: 'Website à medida', desc: 'Para empresas que querem presença profissional online', icon: './assets/icons/web2.png' },
+    { title: 'Design UI/UX',        desc: 'Interfaces pensadas para converter utilizadores em clientes', icon: './assets/icons/ux.png' },
+    { title: 'Branding',     desc: 'Identidade visual clara e memorável para a sua marca',    icon: './assets/icons/brand.png' },
+    { title: 'E-commerce',    desc: 'Lojas online prontas para vender 24/7',       icon: './assets/icons/ecomm.png' }
   ];
 
   render() {

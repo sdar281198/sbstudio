@@ -85,16 +85,46 @@ async function loadMessages() {
     div.className = "p-4 bg-gray-800 rounded-xl border border-gray-700";
 
     div.innerHTML = `
-      <p><b>Nombre:</b> ${m.name}</p>
-      <p><b>Email:</b> ${m.email}</p>
-      <p><b>Asunto:</b> ${m.subject ?? ''}</p>
-      <p class="mt-2">${m.message}</p>
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <p class="text-white/80 text-sm">
+          <b class="text-white">#${m.id}</b>
+          <span class="mx-2">•</span>
+          <span>${m.created_at ?? ''}</span>
+        </p>
 
-      <button onclick="openModal(${m.id})"
-        class="mt-3 px-3 py-1 bg-red-600 rounded hover:bg-red-700">
-        Eliminar
+        <p class="mt-2"><b>Nome:</b> ${m.name ?? ''}</p>
+        <p><b>Email:</b> ${m.email ?? ''}</p>
+
+        <div class="mt-2 flex flex-wrap gap-2 text-sm">
+          ${m.service ? `<span class="px-2 py-1 rounded bg-gray-700/60">Serviço: ${m.service}</span>` : ''}
+          ${m.budget ? `<span class="px-2 py-1 rounded bg-gray-700/60">Orçamento: ${m.budget}</span>` : ''}
+          ${m.subject ? `<span class="px-2 py-1 rounded bg-gray-700/60">Assunto: ${m.subject}</span>` : ''}
+        </div>
+
+        <p class="mt-3 whitespace-pre-wrap text-white/90">${m.message ?? ''}</p>
+
+        <details class="mt-3 text-sm text-white/70">
+          <summary class="cursor-pointer hover:text-white">Detalhes técnicos</summary>
+          <div class="mt-2">
+            <p><b>IP:</b> ${m.ip ?? '-'}</p>
+            <p class="break-all"><b>User-Agent:</b> ${m.user_agent ?? '-'}</p>
+          </div>
+        </details>
+
+        <button onclick="openModal(${m.id})"
+          class="mt-4 px-3 py-2 bg-red-600 rounded hover:bg-red-700">
+          Eliminar
+        </button>
+      </div>
+
+      <button
+        class="shrink-0 px-3 py-2 rounded bg-gray-700 hover:bg-gray-600"
+        onclick="navigator.clipboard.writeText('${(m.email ?? '').replace(/'/g, "\\'")}')">
+        Copiar email
       </button>
-    `;
+    </div>
+  `;
 
     container.appendChild(div);
   });
@@ -116,11 +146,16 @@ function closeModal() {
 document.getElementById("confirmDelete").onclick = async () => {
   if (!deleteId) return;
 
-  await fetch(`${base}/backend/post-test.php?mode=messages&id=${deleteId}`, {
-    method: "DELETE",
+  const fd = new FormData();
+  fd.append('id', deleteId);
+
+  await fetch(`${base}/backend/post-test.php?mode=messages`, {
+    method: "POST",
+    body: fd,
     headers: { "Accept": "application/json" },
     credentials: "same-origin"
   });
+
 
   closeModal();
   loadMessages();

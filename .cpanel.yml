@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/sdardev1/public_html/sbstudio
-    - /bin/cp -R * $DEPLOYPATH
+    - /usr/bin/rsync -av --delete --exclude='.git' --exclude='.cpanel.yml' ./ $DEPLOYPATH/

@@ -14,11 +14,13 @@ PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ]
 );
 } catch (Throwable $e) {
-http_response_code(500);
-header('Content-Type: application/json');
-echo json_encode(['error' => 'DB connection failed', 'detail'=>$e->getMessage()]);
-exit;
+  error_log('[DB] Connection failed: ' . $e->getMessage());
+  http_response_code(500);
+  header('Content-Type: application/json; charset=utf-8');
+  echo json_encode(['error' => 'DB connection failed']);
+  exit;
 }
+
 
 
 function json_response($data, int $code = 200): void {
@@ -41,17 +43,18 @@ if (($_SESSION['user']['role'] ?? '') !== 'admin') json_response(['error' => 'Ad
 
 
 function body_json(): array {
-$raw = file_get_contents('php://input');
-$data = json_decode($raw, true);
-return is_array($data) ? $data : [];
+  $raw = file_get_contents('php://input') ?: '';
+  $data = json_decode($raw, true);
+  return (json_last_error() === JSON_ERROR_NONE && is_array($data)) ? $data : [];
 }
+
 
 
 // CORS (opcional)
 if (defined('CORS_ORIGIN')) {
 header('Access-Control-Allow-Origin: ' . CORS_ORIGIN);
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: Content-Type, Accept');
 header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit; // preflight
 }

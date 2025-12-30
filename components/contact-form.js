@@ -166,13 +166,22 @@ export class ContactForm extends LitElement {
 
   render() {
     return html`
-      <section class="py-20 bg-white">
+      <section class="py-20 bg-gray-300">
         <div class="mx-auto max-w-5xl px-4 grid md:grid-cols-2 gap-8 items-start">
           <!-- Lado izquierdo -->
           <div class="text-center md:text-left">
-            <h2 class="text-3xl font-bold text-gray-800">Vamos conversar</h2>
-            <p class="text-gray-700 mt-2 mb-[1rem]">
-              Conte-nos a sua ideia e entraremos em contacto consigo em menos de 24 horas.
+            <h2 class="text-3xl font-bold text-gray-800">Vamos falar sobre o seu projecto</h2>
+            <p class="text-gray-700 mt-2">
+              Diga-nos o que precisa e enviamos uma proposta clara em até 24 horas. Sem compromisso.
+            </p>
+            <p class="text-gray-700 mb-[1rem]">
+              Prefere resposta imediata? Fale connosco no
+              <a 
+                href="https://wa.me/351939441781?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços."
+                target="_blank"
+              >
+                WhatsApp <i class="fa-brands fa-whatsapp"></i>
+              </a>
             </p>
             <div class="w-82 md:w-full mx-auto h-80 rounded-xl overflow-hidden">
              <iframe 
@@ -194,7 +203,8 @@ export class ContactForm extends LitElement {
           >
             <input
               name="name"
-              placeholder="Nombre"
+              placeholder="Nome"
+              autocomplete="name"
               class="px-4 py-3 rounded-xl bg-white/5 border border-gray-700"
             />
 
@@ -202,29 +212,57 @@ export class ContactForm extends LitElement {
               type="email"
               name="email"
               placeholder="Email"
+              autocomplete="email"
               class="px-4 py-3 rounded-xl bg-white/5 border border-gray-700"
             />
 
+            <select
+              name="service"
+              class="form-select px-4 py-3 rounded-xl border border-gray-700"
+            >
+              <option value="" selected>Tipo de serviço</option>
+              <option value="Website Profissional">Website Profissional</option>
+              <option value="E-commerce">E-commerce</option>
+              <option value="Sistema à medida">Sistema à medida</option>
+              <option value="Manutenção / Melhorias">Manutenção / Melhorias</option>
+            </select>
+
+            <select
+              name="budget"
+              class="form-select px-4 py-3 rounded-xl border border-gray-700"
+            >
+              <option value="" selected>Orçamento aproximado</option>
+              <option value="Até 500€">Até 500€</option>
+              <option value="500€ – 1.000€">500€ – 1.000€</option>
+              <option value="1.000€ – 2.000€">1.000€ – 2.000€</option>
+              <option value="2.000€+">2.000€+</option>
+            </select>
+
             <input
               name="subject"
-              placeholder="Asunto"
+              placeholder="Assunto"
               class="px-4 py-3 rounded-xl bg-white/5 border border-gray-700"
             />
 
             <textarea
               name="message"
               rows="5"
-              placeholder="Mensaje"
+              placeholder="Mensagem"
               class="px-4 py-3 rounded-xl bg-white/5 border border-gray-700"
             ></textarea>
 
             <button
               class="px-5 py-3 rounded-xl bg-gray-800 text-white font-semibold hover:bg-gray-500 transition"
             >
-              Enviar
+              Pedir orçamento
             </button>
 
+            <p class="text-xs text-gray-600 text-center">
+              Ao enviar, concorda em ser contactado por email. Não fazemos spam.
+            </p>
+            <input name="website" tabindex="-1" autocomplete="off" class="hidden" />
           </form>
+
         </div>
       </section>
     `;

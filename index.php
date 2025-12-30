@@ -25,7 +25,7 @@ $BASE_URL = $isLocal ? '/sbstudio' : '/sbstudio';
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
     />
-    <link rel="stylesheet" href="https://sdardev.com/sbstudio/css/styles.css" />
+    <link rel="stylesheet" href="<?= $BASE_URL ?>/css/styles.css?v=3" />
     <link rel="icon" type="image/png" href="./assets/images/favicon.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <!-- 3D y Lit -->
@@ -143,6 +143,13 @@ $BASE_URL = $isLocal ? '/sbstudio' : '/sbstudio';
             >
               <i class="fa-brands fa-linkedin"></i>
             </a>
+            <a
+              href="https://wa.me/351939441781?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços."
+              target="_blank"
+              class="text-white/70 hover:text-white text-xl"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
           </li>
         </ul>
       </nav>
@@ -152,14 +159,32 @@ $BASE_URL = $isLocal ? '/sbstudio' : '/sbstudio';
       <hero-section id="nos"></hero-section>
       <services-grid id="servicios"></services-grid>
       <projects-gallery id="proyectos"></projects-gallery>
+      <testimonials-section></testimonials-section>
       <contact-form id="contacto"></contact-form>
     </main>
 
     <footer class="border-t border-white/10 py-10 text-center text-sm text-gray-700 bg-gray-300">
     © <span id="year"></span> SB Studio — Todos os direitos reservados
     </footer>
+      <!-- Floating CTA -->
+    <a href="#contacto" class="floating-cta" id="floatingCta" aria-label="Fale connosco">
+      <i class="fa-solid fa-user"></i>
+      <span>Fale connosco</span>
+    </a>
+    <a 
+      href="https://wa.me/351939441781?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20vossos%20serviços."
+      target="_blank"
+      class="floating-cta whatsapp-cta is-visible"
+      aria-label="Fale connosco no WhatsApp"
+      id="whatsappCta"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
 
-    <script type="module" src="./js/main.js?v=1"></script>
+
+
+    <script type="module" src="./js/main.js?v=2"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </body>
 </html>

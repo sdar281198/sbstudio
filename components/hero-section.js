@@ -24,11 +24,11 @@ export class HeroSection extends LitElement {
         <div class="mx-auto max-w-7xl px-4 py-28 grid md:grid-cols-2 items-center gap-10">
           <div>
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-center md:text-left">
-              Soluções <b>Web</b> + <b>Branding</b> com atitude
+              Websites e sistemas à medida para negócios que querem crescer no digital.
             </h1>
 
             <p class="mt-4 text-white/80 max-w-prose text-center md:text-left text-lg md:text-xl">
-              Desenvolvemos websites e sistemas personalizados, e criamos identidades visuais que se destacam.
+              Desenvolvemos soluções digitais personalizadas, pensadas para gerar resultados e facilitar a gestão do seu negócio.
             </p>
 
             <div class="mt-8 flex flex-col md:flex-row gap-4 items-center md:items-start">
